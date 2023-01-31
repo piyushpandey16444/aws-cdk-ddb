@@ -3,17 +3,14 @@ import * as sns from 'aws-cdk-lib/aws-sns';
 import * as subs from 'aws-cdk-lib/aws-sns-subscriptions';
 import * as sqs from 'aws-cdk-lib/aws-sqs';
 import { Construct } from 'constructs';
+import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 
 export class AwsCdkDdbStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    const queue = new sqs.Queue(this, 'AwsCdkDdbQueue', {
-      visibilityTimeout: Duration.seconds(300)
+    const table = new dynamodb.Table(this, 'Student', {
+      partitionKey: { name: 'student_id', type: dynamodb.AttributeType.STRING },
     });
-
-    const topic = new sns.Topic(this, 'AwsCdkDdbTopic');
-
-    topic.addSubscription(new subs.SqsSubscription(queue));
   }
 }
