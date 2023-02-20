@@ -1,9 +1,13 @@
-def lambda_handler(event, context):
+import json
+
+
+def get_products(event, context):
+    print('EVENT: ', event)
     return {
-        "status_code": 200,
-        "data": "Coming from Lambda..."
+        'statusCode': 200,
+        'body': json.dumps('products from Lambda!')
     }
 
 
 if __name__ == "__main__":
-    print(lambda_handler(None, None))
+    print(get_products(None, None))
